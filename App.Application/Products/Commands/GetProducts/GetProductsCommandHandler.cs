@@ -26,15 +26,15 @@ namespace App.Application.Products.Commands.GetProducts
 
         public async Task<ErrorOr<IEnumerable<ProductDto>>> Handle(GetProductCommand request, CancellationToken cancellationToken)
         {
-            var result = await _redisCacheService.GetData<IEnumerable<ProductDto>>("products");
-            if (result is not null)
-            {
+            //var result = await _redisCacheService.GetData<IEnumerable<ProductDto>>("products");
+            //if (result is not null)
+            //{
 
-                return result.ToList();
-            }
-            var data = await _productRepository.GetAll();
-            result = _mapper.Map<IEnumerable<ProductDto>>((data));
-            _redisCacheService.SetData("products", result);
+            //    return result.ToList();
+            //}
+            var data = await _productRepository.GetAll(request.pagination);
+            var result = _mapper.Map<IEnumerable<ProductDto>>((data));
+            //_redisCacheService.SetData("products", result);
             return result.ToList();
         }
 

@@ -14,6 +14,7 @@ namespace App.Application.Customers.Commands.CreateCustomer
             RuleFor(x => x.Mobile).NotEmpty();
             RuleFor(x => x.Email).NotEmpty().EmailAddress()
             .WithMessage("Email is not valid.");
+
         }
     }
 }

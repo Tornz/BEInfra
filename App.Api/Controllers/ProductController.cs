@@ -3,6 +3,7 @@
 
 
 using App.Application.Products.Commands.GetProducts;
+using App.Contracts.Pagination;
 using App.Contracts.Products;
 using MapsterMapper;
 using MediatR;
@@ -23,9 +24,10 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ProductList()
+        public async Task<IActionResult> ProductList(int page=1, int recordsPerPage=10)
         {    
-            var getProductResult = await _mediator.Send(new GetProductCommand() { });            
+            var pagination = new PaginationDTO { Page = page, RecordsPerPage = recordsPerPage };
+            var getProductResult = await _mediator.Send(new GetProductCommand(pagination) { });            
             return getProductResult.Match
                 (products => Ok(_mapper.Map<IEnumerable<ProductReponse>>(products)),
                 errors => Problem(errors)

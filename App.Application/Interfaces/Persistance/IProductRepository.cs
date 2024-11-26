@@ -1,6 +1,7 @@
 ﻿
 
 
+using App.Contracts.Pagination;
 using App.Domain.Products;
 
 namespace App.Application.Interfaces.Persistance
@@ -8,6 +9,6 @@ namespace App.Application.Interfaces.Persistance
     public interface IProductRepository
     {
          Task Add(Product product);
-         Task<IEnumerable<Product>>  GetAll();
+         Task<IEnumerable<Product>>  GetAll(PaginationDTO pagination);
     }
 }

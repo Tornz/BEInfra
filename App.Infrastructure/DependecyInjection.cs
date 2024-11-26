@@ -39,10 +39,10 @@ public static class DependencyInjection
 
         // Redis configuration
         var redisConnectionString = configuration["Redis:ConnectionString"];
-        var options = ConfigurationOptions.Parse(redisConnectionString);       
+        var options = ConfigurationOptions.Parse(redisConnectionString);
         options.Password = ""; // For secured Redis
         options.DefaultDatabase = 1; // Choose the default database
-        //options.Ssl = true; // Enable SSL if required
+      // options.Ssl = true; // Enable SSL if required
         options.ConnectRetry = 5; // Retry connection 5 times
         options.SyncTimeout = 5000; // Adjust the sync timeout        
 
@@ -55,6 +55,7 @@ public static class DependencyInjection
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IRedisCacheService, RedisCacheService>();
         services.AddScoped<IIdentityServerRespository, IdentityServerRespository>();
+        services.AddHttpContextAccessor();
         return services;
     }
 
